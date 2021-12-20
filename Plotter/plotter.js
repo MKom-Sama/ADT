@@ -9,7 +9,7 @@ form.addEventListener("submit", (e) => {
   // TODO LATER Validate Equation
 
   // plot from x = 0 -> x = width
-  ctx.strokeStyle = "#59cb2c"
+  ctx.strokeStyle = "#f0193b";
   ctx.beginPath()
   for (let i = 0; i < width; i++) {
       let y = evaluateExpression(equation);

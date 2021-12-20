@@ -1,8 +1,8 @@
 html{
-  width: 100%;
+  width: 99%;
 }
 body {
-  background-color: aquamarine;
+  background-color: #0E5A8A;
   width: 100%;
   
 }
@@ -11,8 +11,8 @@ body {
   width: 60%;
 }
 #canvas {
-  border: 3px solid black;
-  background-color: white;
+  border: 4px solid black;
+  background-color: #F5F8FA;
   border-radius: 1%;
   display: block;
   margin: auto;
@@ -23,4 +23,5 @@ body {
   margin: auto;
   margin-top:2%;
   justify-content: center;
+  align-items: center;
 }

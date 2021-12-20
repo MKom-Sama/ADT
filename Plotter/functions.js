@@ -9,7 +9,7 @@ let originX = width / 2;
 let originY = height / 2;
 
 const drawAxis = () => {
-  ctx.strokeStyle = "#2c51cb";
+  ctx.strokeStyle = "#0f3240";
   ctx.moveTo(originX, 0);
   ctx.lineTo(originX, height);
   ctx.moveTo(0, originY);
