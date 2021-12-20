@@ -1,6 +1,4 @@
-
-
-drawAxis()
+drawAxis();
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -10,13 +8,14 @@ form.addEventListener("submit", (e) => {
 
   // plot from x = 0 -> x = width
   ctx.strokeStyle = "#f0193b";
-  ctx.beginPath()
-  for (let i = 0; i < width; i++) {
-      let y = evaluateExpression(equation);
-      // shifts y 
-      y = Math.abs(y - originY)
-      ctx.lineTo(i,y)
+  ctx.beginPath();
+  for (let i = -250; i < 150; i++) {
+    let y = evaluateExpression(equation, i);
+    // shifts y
+    y = Math.abs(originY - y);
+    x = i + originX;
+    ctx.lineTo(x, y);   
   }
-    ctx.stroke()
-
+  ctx.closePath()
+  ctx.stroke();
 });
