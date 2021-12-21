@@ -18,7 +18,7 @@ const drawAxis = () => {
   ctx.stroke();
 };
 
-const isOperand = (char) => (parseInt(char) ? true : false);
+const isOperand = (char) => (parseInt(char) || char == '0' ? true : false);
 const isOperator = (char) => {
   // Checks if its an operator also returns rank
   if (char == "+" || char == "-") return 1;
