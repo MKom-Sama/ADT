@@ -16,11 +16,14 @@ const drawAxis = () => {
   ctx.moveTo(0, originY);
   ctx.lineTo(width, originY);
   ctx.stroke();
-  // change default canvas so it suits our application
+  // change default canvas config so it suits our application
   ctx.translate(originX, originY);
   ctx.scale(1, -1);
+  // for smoother lines
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
 };
-
 const isOperand = (char) => (parseInt(char) || char == "0" ? true : false);
 const isOperator = (char) => {
   // Checks if its an operator also returns rank
@@ -93,13 +96,13 @@ const evaluateExpression = (eq, valX) => {
 const validateExpression = (eq) => {
   // returns {error,msg}
   // Validates expression
+  // no equation input
   // no two operators next to each other
   // no other symbols but operators & x
   let error = false;
   let msg = "OK Equation";
   // removing spaces
   eq = eq.replace(/\s+/g, "");
-  console.log(eq);
   for (let i = 0; i < eq.length; i++) {
     if (isOperator(eq[i])) {
       // if its in the end of the equation
