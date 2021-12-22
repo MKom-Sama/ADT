@@ -3,45 +3,53 @@
 var form = document.getElementById("form");
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-let height = canvas.clientHeight;
-let width = canvas.clientWidth;
-let originX = width / 2;
-let originY = height / 2;
 
+let { clientHeight, clientWidth } = canvas;
+
+// CANVAS FUNCTIONS
 const clearCanvas = () => {
   // Use the identity matrix while clearing the canvas
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0, width, height);
+  ctx.clearRect(0, 0, clientWidth, clientHeight);
 };
 const drawAxis = (scale) => {
   // drawing axis
   ctx.lineWidth = 2;
   ctx.strokeStyle = "#0f3240";
-  ctx.moveTo(originX, 0);
-  ctx.lineTo(originX, height);
-  ctx.moveTo(0, originY);
-  ctx.lineTo(width, originY);
+  ctx.moveTo(clientWidth / 2, 0);
+  ctx.lineTo(clientWidth / 2, clientHeight);
+  ctx.moveTo(0, clientHeight / 2);
+  ctx.lineTo(clientWidth, clientHeight / 2);
   ctx.stroke();
 
   // change default canvas config so it suits our application
-  ctx.translate(originX, originY);
+  ctx.translate(clientWidth / 2, clientHeight / 2);
+
   // displaying border values
   ctx.font = "italic bold 10pt Tahoma";
   //  x-axis
-  borderX = Math.ceil((width * 0.5) / scale);
-  ctx.fillText(`${borderX}`, width * 0.5 - 20, -8);
-  ctx.fillText(`-${borderX}`, -(width * 0.5) + 8, -8);
+  borderX = Math.ceil((clientWidth * 0.5) / scale);
+  ctx.fillText(`${borderX}`, clientWidth * 0.5 - 20, -8);
+  ctx.fillText(`-${borderX}`, -(clientWidth * 0.5) + 8, -8);
   // y-axis
-  borderY = Math.ceil((height * 0.5) / scale);
-  ctx.fillText(`${borderY}`, 8, -height * 0.5 + 20);
-  ctx.fillText(`-${borderY}`, 8, height * 0.5 - 8);
+  borderY = Math.ceil((clientHeight * 0.5) / scale);
+  ctx.fillText(`${borderY}`, 8, -clientHeight * 0.5 + 20);
+  ctx.fillText(`-${borderY}`, 8, clientHeight * 0.5 - 8);
 
+  // flip canvas vertically 
   ctx.scale(1, -1);
+
   // for smoother lines
   ctx.lineWidth = 2;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
+
+  // change line color
+  ctx.strokeStyle = "#f0193b";
 };
+
+
+// EQUATION PROCESSING FUNCTIONS
 const isOperand = (char) => (parseInt(char) || char == "0" ? true : false);
 const isOperator = (char) => {
   // Checks if its an operator also returns rank
@@ -77,8 +85,6 @@ const evaluateExpression = (eq, valX) => {
     eq = "0 " + eq;
   }
   for (let i = 0; i < eq.length; i++) {
-    // console.log(isOperand(eq[i]))
-    // console.log(isOperator(eq[i]))
     if (eq[i] == "x") {
       operands.push(valX);
     }
@@ -97,8 +103,7 @@ const evaluateExpression = (eq, valX) => {
       } else {
         op1 = operands.pop();
         op2 = operands.pop();
-        operator = operators.pop();
-        operands.push(doOperation(op2, operator, op1));
+        operands.push(doOperation(op2, operators.pop(), op1));
         operators.push(eq[i]);
       }
     }
@@ -113,8 +118,6 @@ const evaluateExpression = (eq, valX) => {
 };
 const validateExpression = (eq) => {
   // returns {error,msg}
-  // Validates expression
-  // no equation input
   // no two operators next to each other
   // no other symbols but operators & x
   let error = false;
