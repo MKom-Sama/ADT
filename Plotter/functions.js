@@ -48,7 +48,10 @@ const doOperation = (op1, operand, op2) => {
 const evaluateExpression = (eq, valX) => {
   let operators = [];
   let operands = [];
-
+  // corner case
+  if (eq[0] == '-') {
+    eq = '0 ' + eq;
+  }
   for (let i = 0; i < eq.length; i++) {
     // console.log(isOperand(eq[i]))
     // console.log(isOperator(eq[i]))
@@ -56,7 +59,12 @@ const evaluateExpression = (eq, valX) => {
       operands.push(valX);
     }
     if (isOperand(eq[i])) {
-      operands.push(parseInt(eq[i]));
+      // multiple digit support
+      let num = eq[i];
+      while (isOperand(eq[i+1])) {
+        num = num + eq[i++];
+      }
+      operands.push(parseInt(num));
     }
     if (isOperator(eq[i])) {
       // check for precendence

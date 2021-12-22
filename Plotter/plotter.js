@@ -17,7 +17,7 @@ form.addEventListener("submit", (e) => {
     // shifts y
     // y = Math.abs(originY - y);
     // x = i + originX;
-    console.log(`F(${i}) = ${evaluateExpression(equation, i)}`);
+    // console.log(`F(${i}) = ${evaluateExpression(equation, i)}`);
     // y = sigmoid((y)*0.04)*height;
     // y = Math.abs(originY - y);
     y = sigmoid(-y * 0.02) * height;
