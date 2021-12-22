@@ -1,5 +1,9 @@
 drawAxis();
 
+let scale = 25;
+// y range +- height / scale
+// x range +- width  / scale
+
 const sigmoid = (val) => {
   return 1 / (1 + Math.exp(-val));
 };
@@ -12,19 +16,10 @@ form.addEventListener("submit", (e) => {
   // plot from x = 0 -> x = width
   ctx.strokeStyle = "#f0193b";
   ctx.beginPath();
-  for (let i = -100; i < 100; i++) {
+  for (let i = -width; i < width; i++) {
     let y = evaluateExpression(equation, i);
-    // shifts y
-    // y = Math.abs(originY - y);
-    // x = i + originX;
-    // console.log(`F(${i}) = ${evaluateExpression(equation, i)}`);
-    // y = sigmoid((y)*0.04)*height;
-    // y = Math.abs(originY - y);
-    y = sigmoid(-y * 0.02) * height;
-    x = sigmoid(i * 0.02) * width;
-    console.log("x : ", x, " y : ", y);
-    
-    ctx.lineTo(x, y);
+    console.log("x : ", i, " y : ", y);
+    ctx.lineTo(i*scale, y*scale);
     ctx.stroke();
   }
   // ctx.closePath();

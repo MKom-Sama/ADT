@@ -16,6 +16,9 @@ const drawAxis = () => {
   ctx.moveTo(0, originY);
   ctx.lineTo(width, originY);
   ctx.stroke();
+  // change default canvas so it suits our application
+  ctx.translate(originX, originY)
+  ctx.scale(1,-1)
 };
 
 const isOperand = (char) => (parseInt(char) || char == '0' ? true : false);
