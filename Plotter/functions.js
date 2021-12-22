@@ -17,11 +17,11 @@ const drawAxis = () => {
   ctx.lineTo(width, originY);
   ctx.stroke();
   // change default canvas so it suits our application
-  ctx.translate(originX, originY)
-  ctx.scale(1,-1)
+  ctx.translate(originX, originY);
+  ctx.scale(1, -1);
 };
 
-const isOperand = (char) => (parseInt(char) || char == '0' ? true : false);
+const isOperand = (char) => (parseInt(char) || char == "0" ? true : false);
 const isOperator = (char) => {
   // Checks if its an operator also returns rank
   if (char == "+" || char == "-") return 1;
@@ -52,8 +52,8 @@ const evaluateExpression = (eq, valX) => {
   let operators = [];
   let operands = [];
   // corner case
-  if (eq[0] == '-') {
-    eq = '0 ' + eq;
+  if (eq[0] == "-") {
+    eq = "0 " + eq;
   }
   for (let i = 0; i < eq.length; i++) {
     // console.log(isOperand(eq[i]))
@@ -64,7 +64,7 @@ const evaluateExpression = (eq, valX) => {
     if (isOperand(eq[i])) {
       // multiple digit support
       let num = eq[i];
-      while (isOperand(eq[i+1])) {
+      while (isOperand(eq[i + 1])) {
         num = num + eq[i++];
       }
       operands.push(parseInt(num));
@@ -89,4 +89,44 @@ const evaluateExpression = (eq, valX) => {
     operands.push(doOperation(op2, operator, op1));
   }
   return Math.ceil(operands.pop());
+};
+const validateExpression = (eq) => {
+  // returns {error,msg}
+  // Validates expression
+  // no two operators next to each other
+  // no other symbols but operators & x
+  let error = false;
+  let msg = "OK Equation";
+  // removing spaces
+  eq = eq.replace(/\s+/g, "");
+  console.log(eq);
+  for (let i = 0; i < eq.length; i++) {
+    if (isOperator(eq[i])) {
+      // if its in the end of the equation
+      if (i + 1 == eq.length) {
+        // ex : x+2-
+        return {
+          error: true,
+          msg: "Missing Operand at the end of the Equation",
+        };
+      }
+      // if its next to another operator
+      if (isOperator(eq[i + 1])) {
+        // ex : x++2
+        return {
+          error: true,
+          msg: "Can't have two operators next to each other",
+        };
+      }
+    }
+
+    // must be either operator , operand or x
+    if (!(isOperator(eq[i]) || isOperand(eq[i]) || eq[i] == "x")) {
+      return {
+        error: true,
+        msg: `syntax err : can't use ${eq[i]}`,
+      };
+    }
+  }
+  return { error, msg };
 };
