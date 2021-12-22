@@ -1,8 +1,14 @@
-drawAxis();
-
 let scale = 25; // higher = more zoomed in
 // y range +- height / scale
 // x range +- width  / scale
+
+drawAxis(scale);
+
+document.getElementById("zoom").addEventListener("change", (e) => {
+  scale = e.target.value;
+  clearCanvas();
+  drawAxis(scale);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -25,7 +31,7 @@ form.addEventListener("submit", (e) => {
     let y = evaluateExpression(equation, i);
     console.log("x : ", i, " y : ", y);
     ctx.lineTo(i * scale, y * scale);
-    ctx.stroke()
+    ctx.stroke();
   }
   // Todo Later use this for smoother lines on small scale
   // ctx.closePath();

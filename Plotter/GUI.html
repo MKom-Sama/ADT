@@ -11,10 +11,13 @@
     <div class="container">
       <canvas width="500" height="500" id="canvas"></canvas>
       <form id="form">
-        <strong>Y = &nbsp;</strong> <input placeholder="Ex. x^2 + 2*x +4" required />
+        <strong>Y = &nbsp;</strong>
+        <input placeholder="Ex. x^2 + 2*x +4" required />
         <input type="number" class="interval" placeholder="From" required />
-        <input type="number" class="interval" placeholder="To" required/>
+        <input type="number" class="interval" placeholder="To" required />
         <button>Plot</button>
+        <input type="range" id="zoom" min="2" max="25" id="range" value="25" />
+        <label for="range">Zoom</label>
       </form>
     </div>
 

@@ -8,7 +8,13 @@ let width = canvas.clientWidth;
 let originX = width / 2;
 let originY = height / 2;
 
-const drawAxis = () => {
+const clearCanvas = () => {
+  // Use the identity matrix while clearing the canvas
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+};
+const drawAxis = (scale) => {
+  // drawing axis
   ctx.lineWidth = 2;
   ctx.strokeStyle = "#0f3240";
   ctx.moveTo(originX, 0);
@@ -16,8 +22,20 @@ const drawAxis = () => {
   ctx.moveTo(0, originY);
   ctx.lineTo(width, originY);
   ctx.stroke();
+
   // change default canvas config so it suits our application
   ctx.translate(originX, originY);
+  // displaying border values
+  ctx.font = "italic bold 10pt Tahoma";
+  //  x-axis
+  borderX = Math.ceil((width * 0.5) / scale);
+  ctx.fillText(`${borderX}`, width * 0.5 - 20, -8);
+  ctx.fillText(`-${borderX}`, -(width * 0.5) + 8, -8);
+  // y-axis
+  borderY = Math.ceil((height * 0.5) / scale);
+  ctx.fillText(`${borderY}`, 8, -height * 0.5 + 20);
+  ctx.fillText(`-${borderY}`, 8, height * 0.5 - 8);
+
   ctx.scale(1, -1);
   // for smoother lines
   ctx.lineWidth = 2;
