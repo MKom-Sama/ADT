@@ -120,6 +120,20 @@ const getDeviceList = (topologyID, dest = "mem") => {
   return deviceList;
 };
 
+const getNodeDeviceList = (topologyID, nodeName, dest = "mem") => {
+  let deviceList = getDeviceList(topologyID, dest);
+  let deviceListOnNode = [];
+  if (deviceList) {
+    deviceList.forEach((device) => {
+      let nodes = Object.values(device.netlist);
+      if (nodes.includes(nodeName)) {
+        deviceListOnNode.push(device);
+      }
+    });
+  }
+  return deviceListOnNode
+};
+
 // utils
 const isTopologyInMem = (topologyID) => {
   // Finds topology in Mem
@@ -133,12 +147,11 @@ const isTopologyInMem = (topologyID) => {
   return foundTopology;
 };
 
-
 module.exports = {
   readFromJSON,
   storeJSONToMem,
   topologiesInMem,
   writeFromMemToJSON,
   deleteTopFromMem,
-  getDeviceList
+  getDeviceList,
 };

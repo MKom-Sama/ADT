@@ -22,4 +22,4 @@ const {
 
 // console.log("topInMem", topologies);
 // console.log(topologyInJSON);
-// console.log(getDeviceList('top_2',"mem"))
+// console.log(getDeviceList('top_1',"mem"))
