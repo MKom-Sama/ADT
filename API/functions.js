@@ -99,10 +99,46 @@ const deleteTopFromMem = (topologyID) => {
   });
 };
 
+const getDeviceList = (topologyID, dest = "mem") => {
+  let deviceList = [];
+  // Search in Memory By default
+  let topology = isTopologyInMem(topologyID);
+
+  if (topology && dest == "mem") {
+    // Topology Found in  Mem
+    deviceList = topology.components;
+  }
+
+  // Search in JSON Folder
+  topology = readFromJSON(topologyID);
+
+  if (topology && dest == "json") {
+    // Topology Found in JSON Folder
+    deviceList = topology.components;
+  }
+
+  return deviceList;
+};
+
+// utils
+const isTopologyInMem = (topologyID) => {
+  // Finds topology in Mem
+  let topologies = topologiesInMem();
+
+  let foundTopology = false;
+  topologies.forEach((top) => {
+    if (top.id == topologyID) foundTopology = top;
+  });
+
+  return foundTopology;
+};
+
+
 module.exports = {
   readFromJSON,
   storeJSONToMem,
   topologiesInMem,
   writeFromMemToJSON,
   deleteTopFromMem,
+  getDeviceList
 };

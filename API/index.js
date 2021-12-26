@@ -6,7 +6,9 @@ const {
   topologiesInMem,
   writeFromMemToJSON,
   deleteTopFromMem,
+  getDeviceList,
 } = require("./functions");
+
 
 // let topologyInJSON = readFromJSON("top1");
 
@@ -20,3 +22,4 @@ const {
 
 // console.log("topInMem", topologies);
 // console.log(topologyInJSON);
+// console.log(getDeviceList('top_2',"mem"))
