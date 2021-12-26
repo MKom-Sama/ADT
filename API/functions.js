@@ -41,8 +41,36 @@ const topologiesInMem = () => {
   return JSON.parse(topologies);
 };
 
+const writeFromMemToJSON = (topologyID) => {
+  // Finds topology in Mem
+  let topologies = topologiesInMem();
+
+  let foundTopology = false;
+  topologies.forEach((top) => {
+    if (top.id == topologyID) foundTopology = top;
+  });
+
+  if (!foundTopology) {
+    console.error("Topology Not in Mem");
+    return;
+  }
+
+  // Topology found in memory
+  // Create a JSON file
+  fs.writeFile(
+    `./Topologies/${topologyID}.json`,
+    JSON.stringify(foundTopology),
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+};
+
 module.exports = {
   readFromJSON,
   storeJSONToMem,
   topologiesInMem,
+  writeFromMemToJSON,
 };
