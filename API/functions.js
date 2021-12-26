@@ -20,15 +20,25 @@ const storeJSONToMem = (topologyID) => {
     return false;
   }
 
-  // Get Topologies in Memory
-  let topologies = topologiesInMem();
-  console.log(topologies);
-  // TODO LATER should check if top with same ID is in mem
-  topologies.push(newTopology);
+  // Get Topology List in Memory
+  let topologyList = topologiesInMem();
+  
+  // Check if top with same ID is in mem
+  let isAlreadyInMem = false;
+  topologyList.forEach((top) => {
+    if (top.id == topologyID) isAlreadyInMem = true;
+  });
 
-  // Write Topologies to Mem
+  if (isAlreadyInMem) {
+    console.error("Topology with same ID already exist in MEM");
+    return;
+  }
 
-  fs.writeFile("memory.json", JSON.stringify(topologies), (err) => {
+  topologyList.push(newTopology);
+
+  // Write new Topology list to Mem
+
+  fs.writeFile("memory.json", JSON.stringify(topologyList), (err) => {
     if (err) {
       throw err;
     }
@@ -37,8 +47,15 @@ const storeJSONToMem = (topologyID) => {
 };
 
 const topologiesInMem = () => {
-  let topologies = fs.readFileSync("memory.json");
-  return JSON.parse(topologies);
+  let topologyList = fs.readFileSync("memory.json");
+  // If File is empty
+  try {
+    topologyList = JSON.parse(topologyList);
+  } catch (err) {
+    // File is Empty
+    topologyList = [];
+  }
+  return topologyList;
 };
 
 const writeFromMemToJSON = (topologyID) => {

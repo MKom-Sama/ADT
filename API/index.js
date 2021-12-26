@@ -9,12 +9,12 @@ const {
 
 // let topologyInJSON = readFromJSON("top1");
 
-// storeJSONToMem("top_1");
+storeJSONToMem("top_2");
 // storeJSONToMem("top_3");
 
-let topologies = topologiesInMem();
+// let topologies = topologiesInMem();
 
-writeFromMemToJSON("top_3");
+// writeFromMemToJSON("top_3");
 
 // console.log("topInMem", topologies);
 // console.log(topologyInJSON);
