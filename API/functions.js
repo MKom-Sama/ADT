@@ -22,7 +22,7 @@ const storeJSONToMem = (topologyID) => {
 
   // Get Topology List in Memory
   let topologyList = topologiesInMem();
-  
+
   // Check if top with same ID is in mem
   let isAlreadyInMem = false;
   topologyList.forEach((top) => {
@@ -85,9 +85,24 @@ const writeFromMemToJSON = (topologyID) => {
   );
 };
 
+const deleteTopFromMem = (topologyID) => {
+  let topologyList = topologiesInMem();
+
+  let newTopologyList = topologyList.filter((top) => top.id != topologyID);
+
+  // Write new Topology list to Mem
+
+  fs.writeFile("memory.json", JSON.stringify(newTopologyList), (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+};
+
 module.exports = {
   readFromJSON,
   storeJSONToMem,
   topologiesInMem,
   writeFromMemToJSON,
+  deleteTopFromMem,
 };

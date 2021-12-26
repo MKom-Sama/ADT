@@ -5,11 +5,13 @@ const {
   storeJSONToMem,
   topologiesInMem,
   writeFromMemToJSON,
+  deleteTopFromMem,
 } = require("./functions");
 
 // let topologyInJSON = readFromJSON("top1");
 
-storeJSONToMem("top_2");
+// storeJSONToMem("top_2");
+// deleteTopFromMem('top_2');
 // storeJSONToMem("top_3");
 
 // let topologies = topologiesInMem();
