@@ -1,22 +1,23 @@
 const fs = require("fs");
 
 const readFromJSON = (topologyID) => {
+  // Returns Topology in JSON Folder ? Topology : False
   try {
     return JSON.parse(
       fs.readFileSync(`./Topologies/${topologyID}.json`, "utf8")
     );
   } catch (err) {
-    console.error("Topology Not Found");
+    console.error(`Topology Not Found in JSON Folder : ${topologyID}.json`);
     return false;
   }
 };
 
-const storeJSONToMem = (topologyID) => {
+const storeJSONToMem =async (topologyID) => {
   // returns True || False
-  const newTopology = readFromJSON(topologyID);
+  const newTopology =await readFromJSON(topologyID);
   if (!newTopology) {
     // Topology JSON not Found
-    console.error("Topology Not Found in JSON");
+    // console.error("Topology Not Found in JSON");
     return false;
   }
 
@@ -30,7 +31,7 @@ const storeJSONToMem = (topologyID) => {
   });
 
   if (isAlreadyInMem) {
-    console.error("Topology with same ID already exist in MEM");
+    console.error(`Topology with same ID already exist in MEM : ${topologyID}`);
     return;
   }
 
@@ -38,7 +39,7 @@ const storeJSONToMem = (topologyID) => {
 
   // Write new Topology list to Mem
 
-  fs.writeFile("memory.json", JSON.stringify(topologyList), (err) => {
+  await fs.writeFileSync("memory.json", JSON.stringify(topologyList), (err) => {
     if (err) {
       throw err;
     }
@@ -85,14 +86,14 @@ const writeFromMemToJSON = (topologyID) => {
   );
 };
 
-const deleteTopFromMem = (topologyID) => {
+const deleteTopFromMem =async (topologyID) => {
   let topologyList = topologiesInMem();
 
   let newTopologyList = topologyList.filter((top) => top.id != topologyID);
 
   // Write new Topology list to Mem
 
-  fs.writeFile("memory.json", JSON.stringify(newTopologyList), (err) => {
+  await fs.writeFileSync("memory.json", JSON.stringify(newTopologyList), (err) => {
     if (err) {
       throw err;
     }
@@ -154,4 +155,5 @@ module.exports = {
   writeFromMemToJSON,
   deleteTopFromMem,
   getDeviceList,
+  getNodeDeviceList
 };
